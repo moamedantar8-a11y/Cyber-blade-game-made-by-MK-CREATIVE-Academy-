@@ -6,7 +6,7 @@
     <title>MK CREATIVE Agency - Pro Arcade Hub</title>
     <style>
         :root {
-            --bg-color: #030712;
+            --bg-color: #000000;
             --container-width: 420px;
             --game-height: 220px;
             --accent: #00ffcc;
@@ -29,39 +29,33 @@
             transition: background 0.3s;
         }
 
-        /* شاشة التحميل الخاصة بالشركة (Loading Screen) */
+        /* شاشة التحميل: خلفية سوداء واسم شركة أبيض ساطع لمدة 3 ثواني */
         #loader-screen {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: #030712;
+            background: #000000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
         }
         .loader-logo {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            color: var(--accent);
-            text-shadow: 0 0 20px rgba(0,255,204,0.6);
-            margin-bottom: 15px;
-            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 25px rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
         }
         .loader-spinner {
             width: 45px; height: 45px;
-            border: 4px solid #1e293b;
+            border: 4px solid #111111;
             border-top: 4px solid var(--accent);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin-bottom: 15px;
-        }
-        .loader-text {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -90,7 +84,7 @@
         }
 
         .control-btn, .mode-toggle-btn {
-            background: #1e293b;
+            background: #111111;
             color: var(--accent);
             border: 1px solid var(--accent);
             padding: 6px 12px;
@@ -112,8 +106,8 @@
         }
 
         .game-card {
-            background: #1e293b;
-            border: 2px solid #334155;
+            background: #111111;
+            border: 2px solid #222222;
             border-radius: 12px;
             padding: 18px 12px;
             display: flex;
@@ -122,7 +116,7 @@
             gap: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .game-card:hover {
@@ -144,11 +138,11 @@
 
         .game-card-desc {
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: #888888;
             margin: 0;
         }
 
-        /* حاوية الألعاب (تظهر عند اختيار لعبة) */
+        /* حاوية الألعاب */
         .game-section {
             display: none;
             width: var(--container-width);
@@ -177,7 +171,7 @@
             height: var(--game-height);
             border: 2px solid var(--accent);
             position: relative;
-            background: linear-gradient(to bottom, #0f172a, #1e293b);
+            background: linear-gradient(to bottom, #050505, #111111);
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,255,204,0.25);
@@ -210,7 +204,7 @@
         #game-over {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 7, 18, 0.92);
+            background: rgba(0, 0, 0, 0.92);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -223,7 +217,7 @@
         .action-btn {
             padding: 10px 24px;
             background: var(--accent);
-            color: #030712;
+            color: #000000;
             border: none;
             font-weight: bold;
             border-radius: 6px;
@@ -234,36 +228,38 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* لعبة 2: Memory Match */
+        /* لعبة 2: Memory Match - معدلة لتظهر بوضوح وثبات تام */
         .memory-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 10px;
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         .memory-card {
             aspect-ratio: 1;
-            background: #1e293b;
-            border: 2px solid #334155;
+            background: #151515;
+            border: 2px solid #333333;
             border-radius: 8px;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             user-select: none;
+            transition: transform 0.1s;
         }
         .memory-card.flipped {
-            background: #0f172a;
+            background: #050505;
             border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0,255,204,0.3);
         }
 
-        /* تنسيقات الألعاب الفرعية */
+        /* الألعاب الفرعية */
         .mini-game-card {
             width: 100%;
-            background: #1e293b;
-            border: 2px solid #334155;
+            background: #111111;
+            border: 2px solid #222222;
             border-radius: 10px;
             padding: 15px;
             box-sizing: border-box;
@@ -271,12 +267,12 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
         .mini-game-card input {
             width: 80%;
             padding: 10px;
-            background: #0f172a;
+            background: #000000;
             border: 1px solid var(--accent);
             color: #fff;
             border-radius: 6px;
@@ -292,8 +288,8 @@
         .rps-btn {
             font-size: 1.8rem;
             padding: 10px 18px;
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: #000000;
+            border: 2px solid #222222;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
@@ -304,7 +300,6 @@
             transform: scale(1.05);
         }
 
-        /* شبكة إكس أوت */
         .ttt-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -315,8 +310,8 @@
         }
         .ttt-cell {
             aspect-ratio: 1;
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: #000000;
+            border: 2px solid #222222;
             border-radius: 8px;
             font-size: 1.8rem;
             font-weight: bold;
@@ -327,13 +322,12 @@
             color: var(--accent);
         }
 
-        /* لعبة 7: Space Dodge */
         #space-container {
             width: 100%;
             height: var(--game-height);
             border: 2px solid var(--accent);
             position: relative;
-            background: #050b14;
+            background: #000000;
             overflow: hidden;
             border-radius: 10px;
         }
@@ -346,10 +340,9 @@
             border-radius: 4px;
         }
 
-        /* لعبة 8: Fast Clicker */
         .clicker-box {
             font-size: 3rem;
-            background: #0f172a;
+            background: #000000;
             border: 2px dashed var(--accent);
             border-radius: 50%;
             width: 110px; height: 110px;
@@ -363,17 +356,17 @@
         .clicker-box:active {
             transform: scale(0.92);
             background: var(--accent);
-            color: #030712;
+            color: #000000;
         }
 
         .hint {
             margin-top: 12px;
-            color: #94a3b8;
+            color: #888888;
             font-size: 0.8rem;
         }
         .copyrights {
             margin-top: 25px;
-            color: #64748b;
+            color: #555555;
             font-size: 0.75rem;
         }
         .copyrights span { color: var(--accent); font-weight: bold; }
@@ -384,7 +377,6 @@
     <div id="loader-screen">
         <div class="loader-logo">MK CREATIVE AGENCY</div>
         <div class="loader-spinner"></div>
-        <div class="loader-text">Loading Arcade Hub...</div>
     </div>
 
     <div class="top-bar">
@@ -473,7 +465,7 @@
             <button class="action-btn" onclick="checkGuess()">تحقق من الرقم</button>
             <p id="guess-feedback" style="margin: 0; color: var(--accent); font-weight: bold;"></p>
         </div>
-        <button class="action-btn" style="margin-top: 10px; background: #334155; color: #fff;" onclick="initGuessGame()">لعبة جديدة</button>
+        <button class="action-btn" style="margin-top: 10px; background: #222222; color: #fff;" onclick="initGuessGame()">لعبة جديدة</button>
         <div class="hint">استخدم التلميحات لتصل للرقم الصحيح! 🎯</div>
     </div>
 
@@ -488,7 +480,7 @@
                 <button class="rps-btn" onclick="playRPS('paper')">📄</button>
                 <button class="rps-btn" onclick="playRPS('scissors')">✂️</button>
             </div>
-            <div id="rps-details" style="font-size: 0.85rem; color: #94a3b8;"></div>
+            <div id="rps-details" style="font-size: 0.85rem; color: #888888;"></div>
         </div>
         <div class="hint">اختر حجر، ورقة، أو مقص للمواجهة! ⚡</div>
     </div>
@@ -553,16 +545,16 @@
     </div>
 
     <script>
-        /* إخفاء شاشة التحميل */
+        /* شاشة التحميل مدتها 3 ثواني بالضبط وبعدها تختفي بنعومة */
         window.addEventListener("load", () => {
             setTimeout(() => {
                 const loader = document.getElementById("loader-screen");
                 loader.style.opacity = "0";
-                setTimeout(() => loader.style.display = "none", 500);
-            }, 1200);
+                setTimeout(() => loader.style.display = "none", 600);
+            }, 3000);
         });
 
-        /* التنقل بين القائمة الرئيسية والألعاب */
+        /* التنقل */
         function openGame(gameNum) {
             document.getElementById("main-menu").style.display = "none";
             document.getElementById("back-home-btn").style.display = "inline-block";
@@ -576,7 +568,7 @@
             document.getElementById("back-home-btn").style.display = "none";
         }
 
-        /* نظام وضع الكمبيوتر */
+        /* وضع الكمبيوتر والتدوير التلقائي */
         let isDesktop = false;
         function toggleDesktopMode() {
             isDesktop = !isDesktop;
@@ -588,12 +580,12 @@
                 root.style.setProperty('--game-height', '260px');
                 modeBtn.innerText = "💻 الكمبيوتر: ON";
                 modeBtn.style.background = "var(--accent)";
-                modeBtn.style.color = "#030712";
+                modeBtn.style.color = "#000000";
             } else {
                 root.style.setProperty('--container-width', '420px');
                 root.style.setProperty('--game-height', '220px');
                 modeBtn.innerText = "💻 الكمبيوتر: OFF";
-                modeBtn.style.background = "#1e293b";
+                modeBtn.style.background = "#111111";
                 modeBtn.style.color = "var(--accent)";
             }
         }
@@ -666,7 +658,7 @@
         restartBtn.addEventListener("click", triggerRestart);
         startGameLoop();
 
-        /* 2: Memory Match */
+        /* 2: Memory Match (تم إصلاح ظهور الكروت بشكل كامل) */
         const emojis = ['🚀', '💻', '🎮', '🔥', '🚀', '💻', '🎮', '🔥'];
         let memoryGrid = document.getElementById("memory-grid");
         let firstCard = null, lockBoard = false, matchesFound = 0;
@@ -675,29 +667,187 @@
             memoryGrid.innerHTML = "";
             matchesFound = 0; firstCard = null; lockBoard = false;
             document.getElementById("mem-status").innerText = "طابق الرموز المتشابهة";
-            let shuffled = emojis.sort(() => 0.5 - Math.random());
+            let shuffled = [...emojis].sort(() => 0.5 - Math.random());
             shuffled.forEach(emoji => {
                 let card = document.createElement("div");
                 card.classList.add("memory-card");
                 card.dataset.emoji = emoji;
-                card.addEventListener("click", flipCard);
+                card.innerText = "?"; // عرض علامة الاستفهام لتكون الكروت مرئية بوضوح
+                
+                card.addEventListener("click", () => flipCard.call(card));
                 card.addEventListener("touchend", (e) => { e.preventDefault(); flipCard.call(card); });
                 memoryGrid.appendChild(card);
             });
         }
+
         function flipCard() {
-            if (lockBoard || this === firstCard || this.classList.contains("flipped")) return;
+            if (lockBoard || this === firstCard || this.classList.contains("flipped") || this.classList.contains("matched")) return;
             this.classList.add("flipped");
             this.innerText = this.dataset.emoji;
-            if (!firstCard) { firstCard = this; return; }
+
+            if (!firstCard) {
+                firstCard = this;
+                return;
+            }
+
             let secondCard = this;
             if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
-                firstCard = null; matchesFound += 2;
-                if (matchesFound === emojis.length) document.getElementById("mem-status").innerText = "🎉 فزت في اللعبة!";
+                firstCard.classList.add("matched");
+                secondCard.classList.add("matched");
+                firstCard = null;
+                matchesFound += 2;
+                if (matchesFound === emojis.length) {
+                    document.getElementById("mem-status").innerText = "🎉 فزت في اللعبة!";
+                }
             } else {
                 lockBoard = true;
                 setTimeout(() => {
-                    firstCard.classList.remove("flipped"); firstCard.innerText = "";
-                    secondCard.classList.remove("flipped"); secondCard.innerText = "";
-                    firstCard = null; lockBoard = false;
-                }, 700); 
+                    firstCard.classList.remove("flipped");
+                    firstCard.innerText = "?";
+                    secondCard.classList.remove("flipped");
+                    secondCard.innerText = "?";
+                    firstCard = null;
+                    lockBoard = false;
+                }, 700);
+            }
+        }
+        initMemoryGame();
+
+        /* 3: Guess Number */
+        let targetNum = 0;
+        function initGuessGame() {
+            targetNum = Math.floor(Math.random() * 50) + 1;
+            document.getElementById("guess-status").innerText = "اختر رقماً من 1 إلى 50";
+            document.getElementById("guess-feedback").innerText = "";
+            document.getElementById("guess-input").value = "";
+        }
+        function checkGuess() {
+            let userVal = parseInt(document.getElementById("guess-input").value);
+            let feedback = document.getElementById("guess-feedback");
+            if(isNaN(userVal)) { feedback.innerText = "أدخل رقم صحيح!"; return; }
+            if(userVal === targetNum) {
+                feedback.innerText = "🎉 بطل! الرقم الصحيح!";
+                document.getElementById("guess-status").innerText = "فزت في التحدي!";
+            } else if(userVal < targetNum) {
+                feedback.innerText = "⬆️ الرقم أعلى من كده!";
+            } else {
+                feedback.innerText = "⬇️ الرقم أقل من كده!";
+            }
+        }
+        initGuessGame();
+
+        /* 4: RPS */
+        let pScore = 0, aScore = 0;
+        const rpsIcons = { rock: '🪨', paper: '📄', scissors: '✂️' };
+        function playRPS(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const aiChoice = choices[Math.floor(Math.random() * 3)];
+            let resultText = "";
+            if (playerChoice === aiChoice) {
+                resultText = "🤝 تعادل!";
+            } else if ((playerChoice === 'rock' && aiChoice === 'scissors') || (playerChoice === 'paper' && aiChoice === 'rock') || (playerChoice === 'scissors' && aiChoice === 'paper')) {
+                resultText = "🎉 فزت بالجولة!"; pScore++;
+            } else {
+                resultText = "❌ فاز الذكاء الاصطناعي!"; aScore++;
+            }
+            document.getElementById("player-score").innerText = pScore;
+            document.getElementById("ai-score").innerText = aScore;
+            document.getElementById("rps-result-text").innerText = resultText;
+            document.getElementById("rps-details").innerText = `أنت: ${rpsIcons[playerChoice]} | الكمبيوتر: ${rpsIcons[aiChoice]}`;
+        }
+
+        /* 5: Tic Tac Toe */
+        let tttBoard = ['', '', '', '', '', '', '', '', ''];
+        let tttGameActive = true, tttPlayer = 'X';
+        function makeMove(index) {
+            if (tttBoard[index] === '' && tttGameActive) {
+                tttBoard[index] = tttPlayer;
+                document.getElementsByClassName('ttt-cell')[index].innerText = tttPlayer;
+                checkWinnerTTT();
+                if (tttGameActive) {
+                    tttPlayer = 'O';
+                    document.getElementById('ttt-status').innerText = "دور الكمبيوتر (O)";
+                    setTimeout(aiMoveTTT, 400);
+                }
+            }
+        }
+        function aiMoveTTT() {
+            if (!tttGameActive) return;
+            let emptyCells = [];
+            tttBoard.forEach((val, idx) => { if(val === '') emptyCells.push(idx); });
+            if (emptyCells.length > 0) {
+                let rand = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                tttBoard[rand] = 'O';
+                document.getElementsByClassName('ttt-cell')[rand].innerText = 'O';
+                checkWinnerTTT();
+                if (tttGameActive) { tttPlayer = 'X'; document.getElementById('ttt-status').innerText = "دورك (X)"; }
+            }
+        }
+        function checkWinnerTTT() {
+            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            let won = false;
+            for (let c of wins) {
+                if (tttBoard[c[0]] && tttBoard[c[0]] === tttBoard[c[1]] && tttBoard[c[0]] === tttBoard[c[2]]) { won = true; break; }
+            }
+            if (won) { document.getElementById('ttt-status').innerText = `🎉 الفائز هو ${tttPlayer}!`; tttGameActive = false; return; }
+            if (!tttBoard.includes('')) { document.getElementById('ttt-status').innerText = "🤝 تعادل!"; tttGameActive = false; }
+        }
+        function resetTTT() {
+            tttBoard = ['', '', '', '', '', '', '', '', ''];
+            tttGameActive = true; tttPlayer = 'X';
+            document.getElementById('ttt-status').innerText = "دورك (X)";
+            Array.from(document.getElementsByClassName('ttt-cell')).forEach(c => c.innerText = '');
+        }
+
+        /* 6: Dice Roll */
+        let dicePScore = 0, diceCScore = 0;
+        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        function rollDice() {
+            let pR = Math.floor(Math.random() * 6) + 1;
+            let cR = Math.floor(Math.random() * 6) + 1;
+            document.getElementById('dice-display').innerText = `${diceFaces[pR-1]} vs ${diceFaces[cR-1]}`;
+            if (pR > cR) { dicePScore++; document.getElementById('dice-msg').innerText = `🎉 فزت (${pR} مقابل ${cR})`; }
+            else if (pR < cR) { diceCScore++; document.getElementById('dice-msg').innerText = `❌ فاز الكمبيوتر (${cR} مقابل ${pR})`; }
+            else { document.getElementById('dice-msg').innerText = `🤝 تعادل (${pR})`; }
+            document.getElementById('dice-p').innerText = dicePScore;
+            document.getElementById('dice-c').innerText = diceCScore;
+        }
+
+        /* 7: Space Dodge */
+        const spaceContainer = document.getElementById("space-container");
+        const spaceship = document.getElementById("spaceship");
+        spaceContainer.addEventListener("mousemove", (e) => {
+            let rect = spaceContainer.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            if (x >= 15 && x <= rect.width - 15) spaceship.style.left = x + "px";
+        });
+        spaceContainer.addEventListener("touchmove", (e) => {
+            let rect = spaceContainer.getBoundingClientRect();
+            let x = e.touches[0].clientX - rect.left;
+            if (x >= 15 && x <= rect.width - 15) spaceship.style.left = x + "px";
+            e.preventDefault();
+        }, {passive: false});
+
+        /* 8: Fast Clicker */
+        let clickerScore = 0, clickerTimeLeft = 10, clickerTimer = null, isClickerActive = false;
+        function startClickerGame() {
+            clickerScore = 0; clickerTimeLeft = 10; isClickerActive = true;
+            document.getElementById("clicker-score").innerText = clickerScore;
+            document.getElementById("clicker-time").innerText = clickerTimeLeft;
+            document.getElementById("clicker-msg").innerText = "انقر بأسرع ما يمكنك!";
+            if (clickerTimer) clearInterval(clickerTimer);
+            clickerTimer = setInterval(() => {
+                clickerTimeLeft--;
+                document.getElementById("clicker-time").innerText = clickerTimeLeft;
+                if (clickerTimeLeft <= 0) {
+                    clearInterval(clickerTimer); isClickerActive = false;
+                    document.getElementById("clicker-msg").innerText = `🏁 انتهى الوقت! الحصيلة: ${clickerScore}`;
+                }
+            }, 1000);
+        }
+        function hitClicker() {
+            if (isClickerActive) { clickerScore++; document.getElementById("clicker-score").innerText = clickerScore; }
+        }
+    </script>
+</body>
+</html>
