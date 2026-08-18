@@ -84,6 +84,8 @@
         .top-controls {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .control-btn, .mode-toggle-btn {
@@ -388,6 +390,7 @@
         <div class="top-controls">
             <button class="control-btn" id="back-home-btn" style="display:none;" onclick="goHome()">🏠 القائمة</button>
             <button class="mode-toggle-btn" onclick="toggleDesktopMode()" id="mode-btn">💻 الكمبيوتر: OFF</button>
+            <button class="mode-toggle-btn" onclick="toggleAutoRotate()" id="rotate-btn" style="background:#050505;">🔄 التدوير: تلقائي</button>
         </div>
     </div>
 
@@ -590,6 +593,51 @@
                 modeBtn.innerText = "💻 الكمبيوتر: OFF";
                 modeBtn.style.background = "#111111";
                 modeBtn.style.color = "var(--accent)";
+            }
+        }
+
+        /* نظام التدوير التلقائي الفعلي وتثبيت الاتجاهات */
+        let rotateState = 0; // 0: تلقائي (حر), 1: تثبيت أفقي (Landscape), 2: تثبيت رأسي (Portrait)
+        async function toggleAutoRotate() {
+            const rotateBtn = document.getElementById("rotate-btn");
+            rotateState = (rotateState + 1) % 3;
+
+            try {
+                if (screen.orientation && screen.orientation.lock) {
+                    if (rotateState === 1) {
+                        await screen.orientation.lock('landscape');
+                        rotateBtn.innerText = "🔄 التدوير: أفقي";
+                        rotateBtn.style.background = "var(--accent)";
+                        rotateBtn.style.color = "#000000";
+                    } else if (rotateState === 2) {
+                        await screen.orientation.lock('portrait');
+                        rotateBtn.innerText = "🔄 التدوير: رأسي";
+                        rotateBtn.style.background = "#ff3366";
+                        rotateBtn.style.color = "#ffffff";
+                    } else {
+                        screen.orientation.unlock();
+                        rotateBtn.innerText = "🔄 التدوير: تلقائي";
+                        rotateBtn.style.background = "#050505";
+                        rotateBtn.style.color = "var(--accent)";
+                    }
+                } else {
+                    // بدعم المتصفحات التي لا تدعم الـ API بشكل كامل
+                    if (rotateState === 1) {
+                        rotateBtn.innerText = "🔄 التدوير: أفقي";
+                        rotateBtn.style.background = "var(--accent)";
+                        rotateBtn.style.color = "#000000";
+                    } else if (rotateState === 2) {
+                        rotateBtn.innerText = "🔄 التدوير: رأسي";
+                        rotateBtn.style.background = "#ff3366";
+                        rotateBtn.style.color = "#ffffff";
+                    } else {
+                        rotateBtn.innerText = "🔄 التدوير: تلقائي";
+                        rotateBtn.style.background = "#050505";
+                        rotateBtn.style.color = "var(--accent)";
+                    }
+                }
+            } catch (err) {
+                console.log("Orientation lock not supported or blocked by browser policy.");
             }
         }
 
