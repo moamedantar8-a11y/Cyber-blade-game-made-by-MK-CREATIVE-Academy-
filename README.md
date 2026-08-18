@@ -57,22 +57,23 @@
             box-shadow: 0 0 8px rgba(0,255,204,0.3);
         }
 
-        /* أزرار التنقل بين الـ 4 ألعاب */
+        /* أزرار التنقل بين الألعاب الـ 6 */
         .arcade-tabs {
             display: flex;
             gap: 6px;
             margin-bottom: 15px;
             flex-wrap: wrap;
             justify-content: center;
+            max-width: 650px;
         }
         .tab-btn {
-            padding: 6px 12px;
+            padding: 6px 10px;
             background: #1e293b;
             color: #94a3b8;
             border: 1px solid #334155;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
         }
         .tab-btn.active {
@@ -196,7 +197,7 @@
             border-color: var(--accent);
         }
 
-        /* تصميم الألعاب الجديدة (تخمين الأرقام و حجر ورق مقص) */
+        /* كروت الألعاب الفرعية وتنسيقاتها */
         .mini-game-card {
             width: 100%;
             background: #1e293b;
@@ -223,21 +224,45 @@
         }
         .rps-choices {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
         }
         .rps-btn {
             font-size: 1.8rem;
-            padding: 10px 16px;
+            padding: 10px 18px;
             background: #0f172a;
             border: 2px solid #334155;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
         .rps-btn:hover {
             border-color: var(--accent);
             transform: scale(1.05);
+        }
+
+        /* شبكة لعبة إكس أوت (Tic Tac Toe) */
+        .ttt-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            width: 100%;
+            max-width: 220px;
+            margin: 0 auto;
+        }
+        .ttt-cell {
+            aspect-ratio: 1;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--accent);
         }
 
         .hint {
@@ -260,12 +285,14 @@
         <button class="mode-toggle-btn" onclick="toggleDesktopMode()" id="mode-btn">💻 وضع الكمبيوتر: متوقف</button>
     </div>
 
-    <!-- أزرار التنقل بين الألعاب الـ 4 -->
+    <!-- أزرار التنقل بين الألعاب الـ 6 -->
     <div class="arcade-tabs">
-        <button class="tab-btn active" onclick="switchGame(1)">🎮 Cyber Jump</button>
-        <button class="tab-btn" onclick="switchGame(2)">🧠 Memory Match</button>
-        <button class="tab-btn" onclick="switchGame(3)">🔢 Guess Number</button>
-        <button class="tab-btn" onclick="switchGame(4)">✂️ RPS Battle</button>
+        <button class="tab-btn active" onclick="switchGame(1)">🎮 Jump</button>
+        <button class="tab-btn" onclick="switchGame(2)">🧠 Memory</button>
+        <button class="tab-btn" onclick="switchGame(3)">🔢 Guess</button>
+        <button class="tab-btn" onclick="switchGame(4)">✂️ RPS</button>
+        <button class="tab-btn" onclick="switchGame(5)">❌ TicTacToe</button>
+        <button class="tab-btn" onclick="switchGame(6)">🎲 Dice</button>
     </div>
 
     <!-- اللعبة الأولى: Cyber Jump -->
@@ -296,7 +323,7 @@
         <div class="hint">اكتشف كروت الرموز المتطابقة! 🧠</div>
     </div>
 
-    <!-- اللعبة الثالثة: Guess The Number (الجديدة) -->
+    <!-- اللعبة الثالثة: Guess The Number -->
     <div id="section-3" class="game-section">
         <div class="score-board">
             <div>التحدي: <span id="guess-status">اختر رقماً من 1 إلى 50</span></div>
@@ -311,7 +338,7 @@
         <div class="hint">استخدم التلميحات لتصل للرقم الصحيح! 🎯</div>
     </div>
 
-    <!-- اللعبة الرابعة: Rock Paper Scissors (الجديدة) -->
+    <!-- اللعبة الرابعة: Rock Paper Scissors (تم ضبط زر الصخرة 🪨) -->
     <div id="section-4" class="game-section">
         <div class="score-board">
             <div>أنت: <span id="player-score">0</span> | الكمبيوتر: <span id="ai-score">0</span></div>
@@ -326,6 +353,41 @@
             <div id="rps-details" style="font-size: 0.85rem; color: #94a3b8;"></div>
         </div>
         <div class="hint">اختر حجر، ورقة، أو مقص للمواجهة! ⚡</div>
+    </div>
+
+    <!-- اللعبة الخامسة الجديدة: Tic Tac Toe -->
+    <div id="section-5" class="game-section">
+        <div class="score-board">
+            <div>الحالة: <span id="ttt-status">دورك (X)</span></div>
+        </div>
+        <div class="mini-game-card">
+            <div class="ttt-grid" id="ttt-board">
+                <div class="ttt-cell" onclick="makeMove(0)"></div>
+                <div class="ttt-cell" onclick="makeMove(1)"></div>
+                <div class="ttt-cell" onclick="makeMove(2)"></div>
+                <div class="ttt-cell" onclick="makeMove(3)"></div>
+                <div class="ttt-cell" onclick="makeMove(4)"></div>
+                <div class="ttt-cell" onclick="makeMove(5)"></div>
+                <div class="ttt-cell" onclick="makeMove(6)"></div>
+                <div class="ttt-cell" onclick="makeMove(7)"></div>
+                <div class="ttt-cell" onclick="makeMove(8)"></div>
+            </div>
+        </div>
+        <button class="action-btn" style="margin-top: 10px;" onclick="resetTTT()">إعادة اللعبة</button>
+        <div class="hint">حقق 3 في خط متصل لفوز سريع! ❌⭕</div>
+    </div>
+
+    <!-- اللعبة السادسة الجديدة: Dice Roll Challenge -->
+    <div id="section-6" class="game-section">
+        <div class="score-board">
+            <div>انت: <span id="dice-p">0</span> | الكمبيوتر: <span id="dice-c">0</span></div>
+        </div>
+        <div class="mini-game-card">
+            <h2 id="dice-display" style="font-size: 3.5rem; margin: 0; color: var(--accent);">🎲</h2>
+            <p id="dice-msg" style="margin: 0; color: #cbd5e1; font-size: 0.9rem;">ارْمِ النرد واكسب النقاط!</p>
+            <button class="action-btn" onclick="rollDice()">ارْمِ النرد الآن</button>
+        </div>
+        <div class="hint">الأعلى رمية يفوز بالجولة! 🎲</div>
     </div>
 
     <div class="copyrights">
@@ -558,9 +620,9 @@
         initGuessGame();
 
 
-        /* برمجة اللعبة الرابعة (Rock Paper Scissors) */
+        /* برمجة اللعبة الرابعة (Rock Paper Scissors) مع ضبط أيقونة الصخرة 🪨 */
         let pScore = 0, aScore = 0;
-        const rpsIcons = { rock: '🪨', paper: '📄', scissors: '✂️' };
+        const rpsIcons = { rock: '🥌', paper: '📄', scissors: '✂️' };
 
         function playRPS(playerChoice) {
             const choices = ['rock', 'paper', 'scissors'];
@@ -585,6 +647,103 @@
             document.getElementById("ai-score").innerText = aScore;
             document.getElementById("rps-result-text").innerText = resultText;
             document.getElementById("rps-details").innerText = `أنت اخترت ${rpsIcons[playerChoice]} | الكمبيوتر اختار ${rpsIcons[aiChoice]}`;
+        }
+
+
+        /* برمجة اللعبة الخامسة الجديدة (Tic Tac Toe) */
+        let tttBoard = ['', '', '', '', '', '', '', '', ''];
+        let tttGameActive = true;
+        let tttPlayer = 'X';
+
+        function makeMove(index) {
+            if (tttBoard[index] === '' && tttGameActive) {
+                tttBoard[index] = tttPlayer;
+                document.getElementsByClassName('ttt-cell')[index].innerText = tttPlayer;
+                
+                checkWinnerTTT();
+                
+                if (tttGameActive) {
+                    tttPlayer = 'O';
+                    document.getElementById('ttt-status').innerText = "دور الكمبيوتر (O)";
+                    setTimeout(aiMoveTTT, 400);
+                }
+            }
+        }
+
+        function aiMoveTTT() {
+            if (!tttGameActive) return;
+            let emptyCells = [];
+            tttBoard.forEach((val, idx) => { if(val === '') emptyCells.push(idx); });
+            
+            if (emptyCells.length > 0) {
+                let randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                tttBoard[randomIndex] = 'O';
+                document.getElementsByClassName('ttt-cell')[randomIndex].innerText = 'O';
+                checkWinnerTTT();
+                if (tttGameActive) {
+                    tttPlayer = 'X';
+                    document.getElementById('ttt-status').innerText = "دورك (X)";
+                }
+            }
+        }
+
+        function checkWinnerTTT() {
+            const winConditions = [
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
+            ];
+            let roundWon = false;
+            
+            for (let condition of winConditions) {
+                let a = tttBoard[condition[0]], b = tttBoard[condition[1]], c = tttBoard[condition[2]];
+                if (a === '' || b === '' || c === '') continue;
+                if (a === b && b === c) { roundWon = true; break; }
+            }
+
+            if (roundWon) {
+                document.getElementById('ttt-status').innerText = `🎉 الفائز هو ${tttPlayer}!`;
+                tttGameActive = false;
+                return;
+            }
+
+            if (!tttBoard.includes('')) {
+                document.getElementById('ttt-status').innerText = "🤝 تعادل!";
+                tttGameActive = false;
+            }
+        }
+
+        function resetTTT() {
+            tttBoard = ['', '', '', '', '', '', '', '', ''];
+            tttGameActive = true;
+            tttPlayer = 'X';
+            document.getElementById('ttt-status').innerText = "دورك (X)";
+            Array.from(document.getElementsByClassName('ttt-cell')).forEach(cell => cell.innerText = '');
+        }
+
+
+        /* برمجة اللعبة السادسة الجديدة (Dice Roll Challenge) */
+        let dicePScore = 0, diceCScore = 0;
+        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
+        function rollDice() {
+            let pRoll = Math.floor(Math.random() * 6) + 1;
+            let cRoll = Math.floor(Math.random() * 6) + 1;
+            
+            document.getElementById('dice-display').innerText = `${diceFaces[pRoll-1]} vs ${diceFaces[cRoll-1]}`;
+            
+            if (pRoll > cRoll) {
+                dicePScore++;
+                document.getElementById('dice-msg').innerText = `🎉 فزت في الرمية (${pRoll} مقابل ${cRoll})`;
+            } else if (pRoll < cRoll) {
+                diceCScore++;
+                document.getElementById('dice-msg').innerText = `❌ فاز الكمبيوتر (${cRoll} مقابل ${pRoll})`;
+            } else {
+                document.getElementById('dice-msg').innerText = `🤝 تعادل في الرمية (${pRoll})`;
+            }
+            
+            document.getElementById('dice-p').innerText = dicePScore;
+            document.getElementById('dice-c').innerText = diceCScore;
         }
     </script>
 </body>
