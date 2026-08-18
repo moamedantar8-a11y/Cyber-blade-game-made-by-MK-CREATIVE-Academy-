@@ -43,12 +43,14 @@
             transition: opacity 0.6s ease;
         }
         .loader-logo {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: bold;
             color: #ffffff;
             text-shadow: 0 0 25px rgba(255,255,255,0.8);
             margin-bottom: 20px;
             letter-spacing: 3px;
+            text-align: center;
+            padding: 0 15px;
         }
         .loader-spinner {
             width: 45px; height: 45px;
@@ -68,6 +70,7 @@
             align-items: center;
             width: 90vw;
             max-width: 700px;
+            margin-top: 10px;
             margin-bottom: 20px;
         }
 
@@ -228,7 +231,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* لعبة 2: Memory Match - معدلة لتظهر بوضوح وثبات تام */
+        /* لعبة 2: Memory Match */
         .memory-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -374,6 +377,7 @@
 </head>
 <body>
 
+    <!-- شاشة التحميل (سوداء، اسم أبيض ساطع، مدتها 3 ثواني بالضبط) -->
     <div id="loader-screen">
         <div class="loader-logo">MK CREATIVE AGENCY</div>
         <div class="loader-spinner"></div>
@@ -387,6 +391,7 @@
         </div>
     </div>
 
+    <!-- لوحة اختيار الألعاب الرئيسية -->
     <div id="main-menu">
         <div class="game-card" onclick="openGame(1)">
             <div class="game-card-icon">🎮</div>
@@ -430,6 +435,7 @@
         </div>
     </div>
 
+    <!-- الألعاب -->
     <div id="section-1" class="game-section">
         <div class="score-board">
             <div>النقاط: <span id="score">0</span></div>
@@ -545,7 +551,6 @@
     </div>
 
     <script>
-        /* شاشة التحميل مدتها 3 ثواني بالضبط وبعدها تختفي بنعومة */
         window.addEventListener("load", () => {
             setTimeout(() => {
                 const loader = document.getElementById("loader-screen");
@@ -554,7 +559,6 @@
             }, 3000);
         });
 
-        /* التنقل */
         function openGame(gameNum) {
             document.getElementById("main-menu").style.display = "none";
             document.getElementById("back-home-btn").style.display = "inline-block";
@@ -568,7 +572,6 @@
             document.getElementById("back-home-btn").style.display = "none";
         }
 
-        /* وضع الكمبيوتر والتدوير التلقائي */
         let isDesktop = false;
         function toggleDesktopMode() {
             isDesktop = !isDesktop;
@@ -658,7 +661,7 @@
         restartBtn.addEventListener("click", triggerRestart);
         startGameLoop();
 
-        /* 2: Memory Match (تم إصلاح ظهور الكروت بشكل كامل) */
+        /* 2: Memory Match */
         const emojis = ['🚀', '💻', '🎮', '🔥', '🚀', '💻', '🎮', '🔥'];
         let memoryGrid = document.getElementById("memory-grid");
         let firstCard = null, lockBoard = false, matchesFound = 0;
@@ -672,7 +675,7 @@
                 let card = document.createElement("div");
                 card.classList.add("memory-card");
                 card.dataset.emoji = emoji;
-                card.innerText = "?"; // عرض علامة الاستفهام لتكون الكروت مرئية بوضوح
+                card.innerText = "?";
                 
                 card.addEventListener("click", () => flipCard.call(card));
                 card.addEventListener("touchend", (e) => { e.preventDefault(); flipCard.call(card); });
@@ -850,4 +853,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
