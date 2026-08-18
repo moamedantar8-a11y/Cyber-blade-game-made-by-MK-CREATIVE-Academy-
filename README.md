@@ -29,6 +29,48 @@
             transition: background 0.3s;
         }
 
+        /* شاشة التحميل الخاصة بالشركة (Loading Screen) */
+        #loader-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #030712;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(0,255,204,0.6);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        .loader-spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid #1e293b;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 15px;
+        }
+        .loader-text {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -280,12 +322,17 @@
 </head>
 <body>
 
+    <div id="loader-screen">
+        <div class="loader-logo">MK CREATIVE AGENCY</div>
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Loading Arcade Hub...</div>
+    </div>
+
     <div class="top-bar">
         <h1 class="main-title">MK Arcade Hub</h1>
         <button class="mode-toggle-btn" onclick="toggleDesktopMode()" id="mode-btn">💻 وضع الكمبيوتر: متوقف</button>
     </div>
 
-    <!-- أزرار التنقل بين الألعاب الـ 6 -->
     <div class="arcade-tabs">
         <button class="tab-btn active" onclick="switchGame(1)">🎮 Jump</button>
         <button class="tab-btn" onclick="switchGame(2)">🧠 Memory</button>
@@ -295,7 +342,6 @@
         <button class="tab-btn" onclick="switchGame(6)">🎲 Dice</button>
     </div>
 
-    <!-- اللعبة الأولى: Cyber Jump -->
     <div id="section-1" class="game-section active">
         <div class="score-board">
             <div>النقاط: <span id="score">0</span></div>
@@ -313,7 +359,6 @@
         <div class="hint">اضغط مسافة أو انقر بالشاشة للقفز! 👆</div>
     </div>
 
-    <!-- اللعبة الثانية: Memory Match -->
     <div id="section-2" class="game-section">
         <div class="score-board">
             <div>الحالة: <span id="mem-status">طابق الرموز المتشابهة</span></div>
@@ -323,7 +368,6 @@
         <div class="hint">اكتشف كروت الرموز المتطابقة! 🧠</div>
     </div>
 
-    <!-- اللعبة الثالثة: Guess The Number -->
     <div id="section-3" class="game-section">
         <div class="score-board">
             <div>التحدي: <span id="guess-status">اختر رقماً من 1 إلى 50</span></div>
@@ -338,7 +382,6 @@
         <div class="hint">استخدم التلميحات لتصل للرقم الصحيح! 🎯</div>
     </div>
 
-    <!-- اللعبة الرابعة: Rock Paper Scissors (تم ضبط زر الصخرة 🪨) -->
     <div id="section-4" class="game-section">
         <div class="score-board">
             <div>أنت: <span id="player-score">0</span> | الكمبيوتر: <span id="ai-score">0</span></div>
@@ -355,7 +398,6 @@
         <div class="hint">اختر حجر، ورقة، أو مقص للمواجهة! ⚡</div>
     </div>
 
-    <!-- اللعبة الخامسة الجديدة: Tic Tac Toe -->
     <div id="section-5" class="game-section">
         <div class="score-board">
             <div>الحالة: <span id="ttt-status">دورك (X)</span></div>
@@ -377,7 +419,6 @@
         <div class="hint">حقق 3 في خط متصل لفوز سريع! ❌⭕</div>
     </div>
 
-    <!-- اللعبة السادسة الجديدة: Dice Roll Challenge -->
     <div id="section-6" class="game-section">
         <div class="score-board">
             <div>انت: <span id="dice-p">0</span> | الكمبيوتر: <span id="dice-c">0</span></div>
@@ -395,6 +436,15 @@
     </div>
 
     <script>
+        /* إخفاء شاشة التحميل بعد ثانية ونصف بـ Fade Out */
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                const loader = document.getElementById("loader-screen");
+                loader.style.opacity = "0";
+                setTimeout(() => loader.style.display = "none", 500);
+            }, 1200);
+        });
+
         /* نظام وضع الكمبيوتر / الموبايل */
         let isDesktop = false;
         function toggleDesktopMode() {
@@ -622,7 +672,7 @@
 
         /* برمجة اللعبة الرابعة (Rock Paper Scissors) مع ضبط أيقونة الصخرة 🪨 */
         let pScore = 0, aScore = 0;
-        const rpsIcons = { rock: '🥌', paper: '📄', scissors: '✂️' };
+        const rpsIcons = { rock: '🪨', paper: '📄', scissors: '✂️' };
 
         function playRPS(playerChoice) {
             const choices = ['rock', 'paper', 'scissors'];
@@ -650,7 +700,7 @@
         }
 
 
-        /* برمجة اللعبة الخامسة الجديدة (Tic Tac Toe) */
+        /* برمجة اللعبة الخامسة (Tic Tac Toe) */
         let tttBoard = ['', '', '', '', '', '', '', '', ''];
         let tttGameActive = true;
         let tttPlayer = 'X';
@@ -722,7 +772,7 @@
         }
 
 
-        /* برمجة اللعبة السادسة الجديدة (Dice Roll Challenge) */
+        /* برمجة اللعبة السادسة (Dice Roll Challenge) */
         let dicePScore = 0, diceCScore = 0;
         const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
