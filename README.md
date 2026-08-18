@@ -29,13 +29,12 @@
             transition: background 0.3s;
         }
 
-        /* رأس الصفحة وأزرار التحكم */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 90vw;
-            max-width: 600px;
+            max-width: 650px;
             margin-bottom: 10px;
         }
 
@@ -46,7 +45,6 @@
             text-shadow: 0 0 15px rgba(0,255,204,0.5);
         }
 
-        /* زر وضع الكمبيوتر / الموبايل */
         .mode-toggle-btn {
             background: #1e293b;
             color: var(--accent);
@@ -59,22 +57,22 @@
             box-shadow: 0 0 8px rgba(0,255,204,0.3);
         }
 
-        /* أزرار التنقل بين الألعاب */
+        /* أزرار التنقل بين الـ 4 ألعاب */
         .arcade-tabs {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 15px;
             flex-wrap: wrap;
             justify-content: center;
         }
         .tab-btn {
-            padding: 7px 14px;
+            padding: 6px 12px;
             background: #1e293b;
             color: #94a3b8;
             border: 1px solid #334155;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
         }
         .tab-btn.active {
@@ -84,7 +82,6 @@
             box-shadow: 0 0 12px rgba(0,255,204,0.5);
         }
 
-        /* حاوية الألعاب المتغيرة الحجم */
         .game-section {
             display: none;
             width: var(--container-width);
@@ -96,7 +93,6 @@
             display: flex;
         }
 
-        /* لوحة النتائج */
         .score-board {
             width: 100%;
             display: flex;
@@ -175,7 +171,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* لعبة 2: تحدي الذاكرة */
+        /* لعبة 2: الذاكرة */
         .memory-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -200,23 +196,49 @@
             border-color: var(--accent);
         }
 
-        /* لعبة 3: سرعة النقر (Clicker Challenge) */
-        .clicker-box {
+        /* تصميم الألعاب الجديدة (تخمين الأرقام و حجر ورق مقص) */
+        .mini-game-card {
             width: 100%;
-            height: 180px;
             background: #1e293b;
-            border: 2px dashed var(--accent);
+            border: 2px solid #334155;
             border-radius: 10px;
+            padding: 15px;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            cursor: pointer;
-            user-select: none;
-            box-shadow: inset 0 0 15px rgba(0,255,204,0.1);
+            gap: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
         }
-        .clicker-box h2 { font-size: 2.2rem; margin: 0; color: var(--accent); }
-        .clicker-box p { color: #94a3b8; font-size: 0.85rem; margin-top: 5px; }
+        .mini-game-card input {
+            width: 80%;
+            padding: 10px;
+            background: #0f172a;
+            border: 1px solid var(--accent);
+            color: #fff;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1.1rem;
+            outline: none;
+        }
+        .rps-choices {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .rps-btn {
+            font-size: 1.8rem;
+            padding: 10px 16px;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .rps-btn:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
 
         .hint {
             margin-top: 10px;
@@ -238,11 +260,12 @@
         <button class="mode-toggle-btn" onclick="toggleDesktopMode()" id="mode-btn">💻 وضع الكمبيوتر: متوقف</button>
     </div>
 
-    <!-- أزرار التنقل بين الألعاب -->
+    <!-- أزرار التنقل بين الألعاب الـ 4 -->
     <div class="arcade-tabs">
         <button class="tab-btn active" onclick="switchGame(1)">🎮 Cyber Jump</button>
         <button class="tab-btn" onclick="switchGame(2)">🧠 Memory Match</button>
-        <button class="tab-btn" onclick="switchGame(3)">⚡ Speed Clicker</button>
+        <button class="tab-btn" onclick="switchGame(3)">🔢 Guess Number</button>
+        <button class="tab-btn" onclick="switchGame(4)">✂️ RPS Battle</button>
     </div>
 
     <!-- اللعبة الأولى: Cyber Jump -->
@@ -260,7 +283,7 @@
                 <button class="action-btn" id="restart-btn">إعادة المحاولة</button>
             </div>
         </div>
-        <div class="hint">اضغط مسافة (كيبورد) أو انقر بالشاشة للقفز! 👆</div>
+        <div class="hint">اضغط مسافة أو انقر بالشاشة للقفز! 👆</div>
     </div>
 
     <!-- اللعبة الثانية: Memory Match -->
@@ -273,17 +296,36 @@
         <div class="hint">اكتشف كروت الرموز المتطابقة! 🧠</div>
     </div>
 
-    <!-- اللعبة الثالثة: Speed Clicker -->
+    <!-- اللعبة الثالثة: Guess The Number (الجديدة) -->
     <div id="section-3" class="game-section">
         <div class="score-board">
-            <div>الوقت المتبقي: <span id="time-left">5</span> ثواني</div>
+            <div>التحدي: <span id="guess-status">اختر رقماً من 1 إلى 50</span></div>
         </div>
-        <div class="clicker-box" id="clicker-target">
-            <h2 id="click-count">0</h2>
-            <p id="clicker-msg">اضغط هنا بأسرع ما يمكنك لبدء التحدي!</p>
+        <div class="mini-game-card">
+            <p style="margin: 0; color: #cbd5e1; font-size: 0.9rem;">حاول تخمين الرقم السحري:</p>
+            <input type="number" id="guess-input" placeholder="اكتب رقمك هنا..." min="1" max="50">
+            <button class="action-btn" onclick="checkGuess()">تحقق من الرقم</button>
+            <p id="guess-feedback" style="margin: 0; color: var(--accent); font-weight: bold;"></p>
         </div>
-        <button class="action-btn" style="margin-top: 10px;" onclick="resetClicker()">إعادة التحدي</button>
-        <div class="hint">اضغط بأسرع سرعة قبل انتهاء العداد! ⚡</div>
+        <button class="action-btn" style="margin-top: 10px; background: #334155; color: #fff;" onclick="initGuessGame()">لعبة جديدة</button>
+        <div class="hint">استخدم التلميحات لتصل للرقم الصحيح! 🎯</div>
+    </div>
+
+    <!-- اللعبة الرابعة: Rock Paper Scissors (الجديدة) -->
+    <div id="section-4" class="game-section">
+        <div class="score-board">
+            <div>أنت: <span id="player-score">0</span> | الكمبيوتر: <span id="ai-score">0</span></div>
+        </div>
+        <div class="mini-game-card">
+            <p id="rps-result-text" style="margin: 0; color: #cbd5e1; font-size: 0.95rem;">اختر سلاحك واهزم الذكاء الاصطناعي!</p>
+            <div class="rps-choices">
+                <button class="rps-btn" onclick="playRPS('rock')">🪨</button>
+                <button class="rps-btn" onclick="playRPS('paper')">📄</button>
+                <button class="rps-btn" onclick="playRPS('scissors')">✂️</button>
+            </div>
+            <div id="rps-details" style="font-size: 0.85rem; color: #94a3b8;"></div>
+        </div>
+        <div class="hint">اختر حجر، ورقة، أو مقص للمواجهة! ⚡</div>
     </div>
 
     <div class="copyrights">
@@ -486,52 +528,63 @@
         initMemoryGame();
 
 
-        /* برمجة اللعبة الثالثة (Speed Clicker) */
-        let clickCount = 0;
-        let timeLeft = 5;
-        let clickerActive = false;
-        let clickTimer;
-        
-        const clickerBox = document.getElementById("clicker-target");
-        const clickCountElem = document.getElementById("click-count");
-        const timeLeftElem = document.getElementById("time-left");
-        const clickerMsg = document.getElementById("clicker-msg");
-
-        function handleClicks() {
-            if (!clickerActive && timeLeft === 5) {
-                clickerActive = true;
-                clickerMsg.innerText = "اضغط بأقصى سرعة!";
-                clickTimer = setInterval(() => {
-                    timeLeft--;
-                    timeLeftElem.innerText = timeLeft;
-                    if (timeLeft <= 0) {
-                        clearInterval(clickerTimer);
-                        clickerActive = false;
-                        clickerMsg.innerText = `انتهى الوقت! النتيجة: ${clickCount} نقرة 🔥`;
-                    }
-                }, 1000);
-            }
-
-            if (clickerActive) {
-                clickCount++;
-                clickCountElem.innerText = clickCount;
-            }
+        /* برمجة اللعبة الثالثة (Guess The Number) */
+        let targetNum = 0;
+        function initGuessGame() {
+            targetNum = Math.floor(Math.random() * 50) + 1;
+            document.getElementById("guess-status").innerText = "اختر رقماً من 1 إلى 50";
+            document.getElementById("guess-feedback").innerText = "";
+            document.getElementById("guess-input").value = "";
         }
 
-        clickerBox.addEventListener("click", handleClicks);
-        clickerBox.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            handleClicks();
-        });
+        function checkGuess() {
+            let userVal = parseInt(document.getElementById("guess-input").value);
+            let feedback = document.getElementById("guess-feedback");
+            
+            if(isNaN(userVal)) {
+                feedback.innerText = "الرجاء إدخال رقم صحيح!";
+                return;
+            }
 
-        function resetClicker() {
-            clearInterval(clickTimer);
-            clickerActive = false;
-            clickCount = 0;
-            timeLeft = 5;
-            clickCountElem.innerText = "0";
-            timeLeftElem.innerText = "5";
-            clickerMsg.innerText = "اضغط هنا بأسرع ما يمكنك لبدء التحدي!";
+            if(userVal === targetNum) {
+                feedback.innerText = "🎉 بطل! لقد اخترت الرقم الصحيح!";
+                document.getElementById("guess-status").innerText = "فزت في التحدي!";
+            } else if(userVal < targetNum) {
+                feedback.innerText = "⬆️ الرقم السحري أعلى من كده!";
+            } else {
+                feedback.innerText = "⬇️ الرقم السحري أقل من كده!";
+            }
+        }
+        initGuessGame();
+
+
+        /* برمجة اللعبة الرابعة (Rock Paper Scissors) */
+        let pScore = 0, aScore = 0;
+        const rpsIcons = { rock: '🪨', paper: '📄', scissors: '✂️' };
+
+        function playRPS(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const aiChoice = choices[Math.floor(Math.random() * 3)];
+            let resultText = "";
+
+            if (playerChoice === aiChoice) {
+                resultText = "🤝 تعادل!";
+            } else if (
+                (playerChoice === 'rock' && aiChoice === 'scissors') ||
+                (playerChoice === 'paper' && aiChoice === 'rock') ||
+                (playerChoice === 'scissors' && aiChoice === 'paper')
+            ) {
+                resultText = "🎉 لقد فزت بهذه الجولة!";
+                pScore++;
+            } else {
+                resultText = "❌ فاز الذكاء الاصطناعي!";
+                aScore++;
+            }
+
+            document.getElementById("player-score").innerText = pScore;
+            document.getElementById("ai-score").innerText = aScore;
+            document.getElementById("rps-result-text").innerText = resultText;
+            document.getElementById("rps-details").innerText = `أنت اخترت ${rpsIcons[playerChoice]} | الكمبيوتر اختار ${rpsIcons[aiChoice]}`;
         }
     </script>
 </body>
