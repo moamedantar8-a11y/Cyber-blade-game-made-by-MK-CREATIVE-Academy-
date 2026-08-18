@@ -99,23 +99,23 @@
             box-shadow: 0 0 8px rgba(0,255,204,0.3);
         }
 
-        /* أزرار التنقل بين الألعاب الـ 6 */
+        /* أزرار التنقل بين الألعاب الـ 8 */
         .arcade-tabs {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             margin-bottom: 15px;
             flex-wrap: wrap;
             justify-content: center;
-            max-width: 650px;
+            max-width: 680px;
         }
         .tab-btn {
-            padding: 6px 10px;
+            padding: 5px 8px;
             background: #1e293b;
             color: #94a3b8;
             border: 1px solid #334155;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             cursor: pointer;
         }
         .tab-btn.active {
@@ -214,7 +214,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* لعبة 2: الذاكرة */
+        /* لعبة 2: Memory Match */
         .memory-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -307,6 +307,56 @@
             color: var(--accent);
         }
 
+        /* لعبة 7: Space Dodge */
+        #space-container {
+            width: 100%;
+            height: var(--game-height);
+            border: 2px solid var(--accent);
+            position: relative;
+            background: #050b14;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        #spaceship {
+            width: 30px;
+            height: 20px;
+            background: var(--accent);
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px;
+        }
+        .meteor {
+            width: 18px;
+            height: 18px;
+            background: #ff3366;
+            position: absolute;
+            top: -20px;
+            border-radius: 50%;
+        }
+
+        /* لعبة 8: Fast Clicker */
+        .clicker-box {
+            font-size: 3rem;
+            background: #0f172a;
+            border: 2px dashed var(--accent);
+            border-radius: 50%;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.1s;
+        }
+        .clicker-box:active {
+            transform: scale(0.92);
+            background: var(--accent);
+            color: #030712;
+        }
+
         .hint {
             margin-top: 10px;
             color: #94a3b8;
@@ -322,6 +372,7 @@
 </head>
 <body>
 
+    <!-- شاشة التحميل للشركة -->
     <div id="loader-screen">
         <div class="loader-logo">MK CREATIVE AGENCY</div>
         <div class="loader-spinner"></div>
@@ -333,15 +384,19 @@
         <button class="mode-toggle-btn" onclick="toggleDesktopMode()" id="mode-btn">💻 وضع الكمبيوتر: متوقف</button>
     </div>
 
+    <!-- أزرار التنقل بين الألعاب الـ 8 -->
     <div class="arcade-tabs">
         <button class="tab-btn active" onclick="switchGame(1)">🎮 Jump</button>
         <button class="tab-btn" onclick="switchGame(2)">🧠 Memory</button>
         <button class="tab-btn" onclick="switchGame(3)">🔢 Guess</button>
         <button class="tab-btn" onclick="switchGame(4)">✂️ RPS</button>
-        <button class="tab-btn" onclick="switchGame(5)">❌ TicTacToe</button>
+        <button class="tab-btn" onclick="switchGame(5)">❌ TTT</button>
         <button class="tab-btn" onclick="switchGame(6)">🎲 Dice</button>
+        <button class="tab-btn" onclick="switchGame(7)">🚀 Dodge</button>
+        <button class="tab-btn" onclick="switchGame(8)">⚡ Clicker</button>
     </div>
 
+    <!-- اللعبة الأولى: Cyber Jump -->
     <div id="section-1" class="game-section active">
         <div class="score-board">
             <div>النقاط: <span id="score">0</span></div>
@@ -359,6 +414,7 @@
         <div class="hint">اضغط مسافة أو انقر بالشاشة للقفز! 👆</div>
     </div>
 
+    <!-- اللعبة الثانية: Memory Match -->
     <div id="section-2" class="game-section">
         <div class="score-board">
             <div>الحالة: <span id="mem-status">طابق الرموز المتشابهة</span></div>
@@ -368,6 +424,7 @@
         <div class="hint">اكتشف كروت الرموز المتطابقة! 🧠</div>
     </div>
 
+    <!-- اللعبة الثالثة: Guess The Number -->
     <div id="section-3" class="game-section">
         <div class="score-board">
             <div>التحدي: <span id="guess-status">اختر رقماً من 1 إلى 50</span></div>
@@ -382,6 +439,7 @@
         <div class="hint">استخدم التلميحات لتصل للرقم الصحيح! 🎯</div>
     </div>
 
+    <!-- اللعبة الرابعة: Rock Paper Scissors -->
     <div id="section-4" class="game-section">
         <div class="score-board">
             <div>أنت: <span id="player-score">0</span> | الكمبيوتر: <span id="ai-score">0</span></div>
@@ -398,6 +456,7 @@
         <div class="hint">اختر حجر، ورقة، أو مقص للمواجهة! ⚡</div>
     </div>
 
+    <!-- اللعبة الخامسة: Tic Tac Toe -->
     <div id="section-5" class="game-section">
         <div class="score-board">
             <div>الحالة: <span id="ttt-status">دورك (X)</span></div>
@@ -419,6 +478,7 @@
         <div class="hint">حقق 3 في خط متصل لفوز سريع! ❌⭕</div>
     </div>
 
+    <!-- اللعبة السادسة: Dice Roll Challenge -->
     <div id="section-6" class="game-section">
         <div class="score-board">
             <div>انت: <span id="dice-p">0</span> | الكمبيوتر: <span id="dice-c">0</span></div>
@@ -429,6 +489,30 @@
             <button class="action-btn" onclick="rollDice()">ارْمِ النرد الآن</button>
         </div>
         <div class="hint">الأعلى رمية يفوز بالجولة! 🎲</div>
+    </div>
+
+    <!-- اللعبة السابعة: Space Dodge (الجديدة الأولى) -->
+    <div id="section-7" class="game-section">
+        <div class="score-board">
+            <div>النقاط: <span id="dodge-score">0</span></div>
+        </div>
+        <div id="space-container">
+            <div id="spaceship"></div>
+        </div>
+        <div class="hint" style="margin-top: 8px;">حرك الماوس أو اسحب يمين ويسار لتفادي النيازك! 🚀</div>
+    </div>
+
+    <!-- اللعبة الثامنة: Fast Clicker (الجديدة الثانية) -->
+    <div id="section-8" class="game-section">
+        <div class="score-board">
+            <div>الوقت: <span id="clicker-time">10</span>ث | النقرات: <span id="clicker-score">0</span></div>
+        </div>
+        <div class="mini-game-card">
+            <div class="clicker-box" onclick="hitClicker()">🔥</div>
+            <p id="clicker-msg" style="margin: 0; color: #cbd5e1; font-size: 0.9rem;">انقر بأسرع ما يمكنك قبل انتهاء الوقت!</p>
+        </div>
+        <button class="action-btn" style="margin-top: 10px;" onclick="startClickerGame()">ابدأ التحدي</button>
+        <div class="hint">اختبر سرعة أصابعك! ⚡</div>
     </div>
 
     <div class="copyrights">
@@ -670,7 +754,7 @@
         initGuessGame();
 
 
-        /* برمجة اللعبة الرابعة (Rock Paper Scissors) مع ضبط أيقونة الصخرة 🪨 */
+        /* برمجة اللعبة الرابعة (Rock Paper Scissors) */
         let pScore = 0, aScore = 0;
         const rpsIcons = { rock: '🪨', paper: '📄', scissors: '✂️' };
 
@@ -794,6 +878,66 @@
             
             document.getElementById('dice-p').innerText = dicePScore;
             document.getElementById('dice-c').innerText = diceCScore;
+        }
+
+
+        /* برمجة اللعبة السابعة (Space Dodge) الجديدة */
+        const spaceContainer = document.getElementById("space-container");
+        const spaceship = document.getElementById("spaceship");
+        let dodgeScore = 0;
+        let dodgeInterval;
+        let isDodging = true;
+
+        spaceContainer.addEventListener("mousemove", (e) => {
+            let rect = spaceContainer.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            if (x >= 15 && x <= rect.width - 15) {
+                spaceship.style.left = x + "px";
+            }
+        });
+
+        spaceContainer.addEventListener("touchmove", (e) => {
+            let rect = spaceContainer.getBoundingClientRect();
+            let x = e.touches[0].clientX - rect.left;
+            if (x >= 15 && x <= rect.width - 15) {
+                spaceship.style.left = x + "px";
+            }
+            e.preventDefault();
+        }, {passive: false});
+
+
+        /* برمجة اللعبة الثامنة (Fast Clicker) الجديدة */
+        let clickerScore = 0;
+        let clickerTimeLeft = 10;
+        let clickerTimer = null;
+        let isClickerActive = false;
+
+        function startClickerGame() {
+            clickerScore = 0;
+            clickerTimeLeft = 10;
+            isClickerActive = true;
+            document.getElementById("clicker-score").innerText = clickerScore;
+            document.getElementById("clicker-time").innerText = clickerTimeLeft;
+            document.getElementById("clicker-msg").innerText = "انقر بأسرع ما يمكنك!";
+
+            if (clickerTimer) clearInterval(clickerTimer);
+
+            clickerTimer = setInterval(() => {
+                clickerTimeLeft--;
+                document.getElementById("clicker-time").innerText = clickerTimeLeft;
+                if (clickerTimeLeft <= 0) {
+                    clearInterval(clickerTimer);
+                    isClickerActive = false;
+                    document.getElementById("clicker-msg").innerText = `🏁 انتهى الوقت! حصيلتك: ${clickerScore} نقرة`;
+                }
+            }, 1000);
+        }
+
+        function hitClicker() {
+            if (isClickerActive) {
+                clickerScore++;
+                document.getElementById("clicker-score").innerText = clickerScore;
+            }
         }
     </script>
 </body>
