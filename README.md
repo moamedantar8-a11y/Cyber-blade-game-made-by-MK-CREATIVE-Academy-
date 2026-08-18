@@ -7,8 +7,8 @@
     <style>
         :root {
             --bg-color: #030712;
-            --container-width: 400px;
-            --game-height: 200px;
+            --container-width: 420px;
+            --game-height: 220px;
             --accent: #00ffcc;
         }
 
@@ -24,7 +24,7 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            padding: 10px 0;
+            padding: 15px 0;
             touch-action: manipulation;
             transition: background 0.3s;
         }
@@ -32,10 +32,8 @@
         /* شاشة التحميل الخاصة بالشركة (Loading Screen) */
         #loader-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background: #030712;
             display: flex;
             flex-direction: column;
@@ -53,8 +51,7 @@
             letter-spacing: 2px;
         }
         .loader-spinner {
-            width: 45px;
-            height: 45px;
+            width: 45px; height: 45px;
             border: 4px solid #1e293b;
             border-top: 4px solid var(--accent);
             border-radius: 50%;
@@ -76,18 +73,23 @@
             justify-content: space-between;
             align-items: center;
             width: 90vw;
-            max-width: 650px;
-            margin-bottom: 10px;
+            max-width: 700px;
+            margin-bottom: 20px;
         }
 
         h1.main-title {
             color: var(--accent);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin: 0;
             text-shadow: 0 0 15px rgba(0,255,204,0.5);
         }
 
-        .mode-toggle-btn {
+        .top-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn, .mode-toggle-btn {
             background: #1e293b;
             color: var(--accent);
             border: 1px solid var(--accent);
@@ -96,35 +98,57 @@
             font-size: 0.8rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 8px rgba(0,255,204,0.3);
+            box-shadow: 0 0 8px rgba(0,255,204,0.2);
         }
 
-        /* أزرار التنقل بين الألعاب الـ 8 */
-        .arcade-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 680px;
+        /* لوحة التحكم الرئيسية (Dashboard Menu) */
+        #main-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 90vw;
+            max-width: 700px;
+            margin-bottom: 20px;
         }
-        .tab-btn {
-            padding: 5px 8px;
+
+        .game-card {
             background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.7rem;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
             cursor: pointer;
-        }
-        .tab-btn.active {
-            background: var(--accent);
-            color: #030712;
-            border-color: var(--accent);
-            box-shadow: 0 0 12px rgba(0,255,204,0.5);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
+        .game-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 0 15px rgba(0,255,204,0.3);
+        }
+
+        .game-card-icon {
+            font-size: 2.2rem;
+        }
+
+        .game-card-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 0;
+        }
+
+        .game-card-desc {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+
+        /* حاوية الألعاب (تظهر عند اختيار لعبة) */
         .game-section {
             display: none;
             width: var(--container-width);
@@ -140,7 +164,7 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 0.95rem;
             font-weight: bold;
             color: #cbd5e1;
@@ -159,22 +183,18 @@
             box-shadow: 0 0 20px rgba(0,255,204,0.25);
         }
         #hero {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             background: var(--accent);
             position: absolute;
-            bottom: 0;
-            left: 40px;
+            bottom: 0; left: 40px;
             border-radius: 4px;
             box-shadow: 0 0 10px var(--accent);
         }
         #block {
-            width: 20px;
-            height: 38px;
+            width: 20px; height: 38px;
             background: #ff3366;
             position: absolute;
-            bottom: 0;
-            left: 100%;
+            bottom: 0; left: 100%;
             border-radius: 4px;
             box-shadow: 0 0 10px #ff3366;
         }
@@ -183,7 +203,7 @@
         }
         @keyframes heroJump {
             0% { bottom: 0; }
-            50% { bottom: 100px; }
+            50% { bottom: 110px; }
             100% { bottom: 0; }
         }
         
@@ -239,7 +259,7 @@
             border-color: var(--accent);
         }
 
-        /* كروت الألعاب الفرعية وتنسيقاتها */
+        /* تنسيقات الألعاب الفرعية */
         .mini-game-card {
             width: 100%;
             background: #1e293b;
@@ -284,7 +304,7 @@
             transform: scale(1.05);
         }
 
-        /* شبكة لعبة إكس أوت (Tic Tac Toe) */
+        /* شبكة إكس أوت */
         .ttt-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -318,22 +338,12 @@
             border-radius: 10px;
         }
         #spaceship {
-            width: 30px;
-            height: 20px;
+            width: 30px; height: 20px;
             background: var(--accent);
             position: absolute;
-            bottom: 10px;
-            left: 50%;
+            bottom: 10px; left: 50%;
             transform: translateX(-50%);
             border-radius: 4px;
-        }
-        .meteor {
-            width: 18px;
-            height: 18px;
-            background: #ff3366;
-            position: absolute;
-            top: -20px;
-            border-radius: 50%;
         }
 
         /* لعبة 8: Fast Clicker */
@@ -342,8 +352,7 @@
             background: #0f172a;
             border: 2px dashed var(--accent);
             border-radius: 50%;
-            width: 110px;
-            height: 110px;
+            width: 110px; height: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -358,12 +367,12 @@
         }
 
         .hint {
-            margin-top: 10px;
+            margin-top: 12px;
             color: #94a3b8;
             font-size: 0.8rem;
         }
         .copyrights {
-            margin-top: 20px;
+            margin-top: 25px;
             color: #64748b;
             font-size: 0.75rem;
         }
@@ -372,7 +381,6 @@
 </head>
 <body>
 
-    <!-- شاشة التحميل للشركة -->
     <div id="loader-screen">
         <div class="loader-logo">MK CREATIVE AGENCY</div>
         <div class="loader-spinner"></div>
@@ -381,23 +389,56 @@
 
     <div class="top-bar">
         <h1 class="main-title">MK Arcade Hub</h1>
-        <button class="mode-toggle-btn" onclick="toggleDesktopMode()" id="mode-btn">💻 وضع الكمبيوتر: متوقف</button>
+        <div class="top-controls">
+            <button class="control-btn" id="back-home-btn" style="display:none;" onclick="goHome()">🏠 القائمة</button>
+            <button class="mode-toggle-btn" onclick="toggleDesktopMode()" id="mode-btn">💻 الكمبيوتر: OFF</button>
+        </div>
     </div>
 
-    <!-- أزرار التنقل بين الألعاب الـ 8 -->
-    <div class="arcade-tabs">
-        <button class="tab-btn active" onclick="switchGame(1)">🎮 Jump</button>
-        <button class="tab-btn" onclick="switchGame(2)">🧠 Memory</button>
-        <button class="tab-btn" onclick="switchGame(3)">🔢 Guess</button>
-        <button class="tab-btn" onclick="switchGame(4)">✂️ RPS</button>
-        <button class="tab-btn" onclick="switchGame(5)">❌ TTT</button>
-        <button class="tab-btn" onclick="switchGame(6)">🎲 Dice</button>
-        <button class="tab-btn" onclick="switchGame(7)">🚀 Dodge</button>
-        <button class="tab-btn" onclick="switchGame(8)">⚡ Clicker</button>
+    <div id="main-menu">
+        <div class="game-card" onclick="openGame(1)">
+            <div class="game-card-icon">🎮</div>
+            <h3 class="game-card-title">Cyber Jump</h3>
+            <p class="game-card-desc">تحدي القفز وتفادي العوائق</p>
+        </div>
+        <div class="game-card" onclick="openGame(2)">
+            <div class="game-card-icon">🧠</div>
+            <h3 class="game-card-title">Memory Match</h3>
+            <p class="game-card-desc">اختبر قوة ذاكرتك بالرموز</p>
+        </div>
+        <div class="game-card" onclick="openGame(3)">
+            <div class="game-card-icon">🔢</div>
+            <h3 class="game-card-title">Guess Number</h3>
+            <p class="game-card-desc">اعثر على الرقم السحري</p>
+        </div>
+        <div class="game-card" onclick="openGame(4)">
+            <div class="game-card-icon">✂️</div>
+            <h3 class="game-card-title">R P S</h3>
+            <p class="game-card-desc">حجر، ورقة، ومقص ذكي</p>
+        </div>
+        <div class="game-card" onclick="openGame(5)">
+            <div class="game-card-icon">❌</div>
+            <h3 class="game-card-title">Tic Tac Toe</h3>
+            <p class="game-card-desc">إكس أوت ضد الكمبيوتر</p>
+        </div>
+        <div class="game-card" onclick="openGame(6)">
+            <div class="game-card-icon">🎲</div>
+            <h3 class="game-card-title">Dice Roll</h3>
+            <p class="game-card-desc">تحدي رمي النرد والحظ</p>
+        </div>
+        <div class="game-card" onclick="openGame(7)">
+            <div class="game-card-icon">🚀</div>
+            <h3 class="game-card-title">Space Dodge</h3>
+            <p class="game-card-desc">تفادي نيازك الفضاء</p>
+        </div>
+        <div class="game-card" onclick="openGame(8)">
+            <div class="game-card-icon">⚡</div>
+            <h3 class="game-card-title">Fast Clicker</h3>
+            <p class="game-card-desc">اختبر سرعة أصابعك</p>
+        </div>
     </div>
 
-    <!-- اللعبة الأولى: Cyber Jump -->
-    <div id="section-1" class="game-section active">
+    <div id="section-1" class="game-section">
         <div class="score-board">
             <div>النقاط: <span id="score">0</span></div>
             <div>الأعلى: <span id="high-score">0</span></div>
@@ -405,7 +446,6 @@
         <div id="game-container">
             <div id="hero"></div>
             <div id="block"></div>
-            
             <div id="game-over">
                 <h2>انتهت اللعبة</h2>
                 <button class="action-btn" id="restart-btn">إعادة المحاولة</button>
@@ -414,7 +454,6 @@
         <div class="hint">اضغط مسافة أو انقر بالشاشة للقفز! 👆</div>
     </div>
 
-    <!-- اللعبة الثانية: Memory Match -->
     <div id="section-2" class="game-section">
         <div class="score-board">
             <div>الحالة: <span id="mem-status">طابق الرموز المتشابهة</span></div>
@@ -424,7 +463,6 @@
         <div class="hint">اكتشف كروت الرموز المتطابقة! 🧠</div>
     </div>
 
-    <!-- اللعبة الثالثة: Guess The Number -->
     <div id="section-3" class="game-section">
         <div class="score-board">
             <div>التحدي: <span id="guess-status">اختر رقماً من 1 إلى 50</span></div>
@@ -439,7 +477,6 @@
         <div class="hint">استخدم التلميحات لتصل للرقم الصحيح! 🎯</div>
     </div>
 
-    <!-- اللعبة الرابعة: Rock Paper Scissors -->
     <div id="section-4" class="game-section">
         <div class="score-board">
             <div>أنت: <span id="player-score">0</span> | الكمبيوتر: <span id="ai-score">0</span></div>
@@ -456,7 +493,6 @@
         <div class="hint">اختر حجر، ورقة، أو مقص للمواجهة! ⚡</div>
     </div>
 
-    <!-- اللعبة الخامسة: Tic Tac Toe -->
     <div id="section-5" class="game-section">
         <div class="score-board">
             <div>الحالة: <span id="ttt-status">دورك (X)</span></div>
@@ -478,7 +514,6 @@
         <div class="hint">حقق 3 في خط متصل لفوز سريع! ❌⭕</div>
     </div>
 
-    <!-- اللعبة السادسة: Dice Roll Challenge -->
     <div id="section-6" class="game-section">
         <div class="score-board">
             <div>انت: <span id="dice-p">0</span> | الكمبيوتر: <span id="dice-c">0</span></div>
@@ -491,7 +526,6 @@
         <div class="hint">الأعلى رمية يفوز بالجولة! 🎲</div>
     </div>
 
-    <!-- اللعبة السابعة: Space Dodge (الجديدة الأولى) -->
     <div id="section-7" class="game-section">
         <div class="score-board">
             <div>النقاط: <span id="dodge-score">0</span></div>
@@ -499,10 +533,9 @@
         <div id="space-container">
             <div id="spaceship"></div>
         </div>
-        <div class="hint" style="margin-top: 8px;">حرك الماوس أو اسحب يمين ويسار لتفادي النيازك! 🚀</div>
+        <div class="hint" style="margin-top: 8px;">حرك الماوس أو اسحب لتفادي النيازك! 🚀</div>
     </div>
 
-    <!-- اللعبة الثامنة: Fast Clicker (الجديدة الثانية) -->
     <div id="section-8" class="game-section">
         <div class="score-board">
             <div>الوقت: <span id="clicker-time">10</span>ث | النقرات: <span id="clicker-score">0</span></div>
@@ -520,7 +553,7 @@
     </div>
 
     <script>
-        /* إخفاء شاشة التحميل بعد ثانية ونصف بـ Fade Out */
+        /* إخفاء شاشة التحميل */
         window.addEventListener("load", () => {
             setTimeout(() => {
                 const loader = document.getElementById("loader-screen");
@@ -529,7 +562,21 @@
             }, 1200);
         });
 
-        /* نظام وضع الكمبيوتر / الموبايل */
+        /* التنقل بين القائمة الرئيسية والألعاب */
+        function openGame(gameNum) {
+            document.getElementById("main-menu").style.display = "none";
+            document.getElementById("back-home-btn").style.display = "inline-block";
+            document.querySelectorAll('.game-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(`section-${gameNum}`).classList.add('active');
+        }
+
+        function goHome() {
+            document.querySelectorAll('.game-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById("main-menu").style.display = "grid";
+            document.getElementById("back-home-btn").style.display = "none";
+        }
+
+        /* نظام وضع الكمبيوتر */
         let isDesktop = false;
         function toggleDesktopMode() {
             isDesktop = !isDesktop;
@@ -537,30 +584,21 @@
             const modeBtn = document.getElementById("mode-btn");
 
             if (isDesktop) {
-                root.style.setProperty('--container-width', '650px');
+                root.style.setProperty('--container-width', '680px');
                 root.style.setProperty('--game-height', '260px');
-                modeBtn.innerText = "💻 وضع الكمبيوتر: مُفعّل";
+                modeBtn.innerText = "💻 الكمبيوتر: ON";
                 modeBtn.style.background = "var(--accent)";
                 modeBtn.style.color = "#030712";
             } else {
-                root.style.setProperty('--container-width', '400px');
-                root.style.setProperty('--game-height', '200px');
-                modeBtn.innerText = "💻 وضع الكمبيوتر: متوقف";
+                root.style.setProperty('--container-width', '420px');
+                root.style.setProperty('--game-height', '220px');
+                modeBtn.innerText = "💻 الكمبيوتر: OFF";
                 modeBtn.style.background = "#1e293b";
                 modeBtn.style.color = "var(--accent)";
             }
         }
 
-        /* نظام التبديل بين الألعاب */
-        function switchGame(gameNum) {
-            document.querySelectorAll('.game-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(`section-${gameNum}`).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        /* برمجة اللعبة الأولى (Cyber Jump) */
+        /* 1: Cyber Jump */
         const hero = document.getElementById("hero");
         const block = document.getElementById("block");
         const scoreElem = document.getElementById("score");
@@ -572,7 +610,6 @@
         let score = 0;
         let highScore = localStorage.getItem("mk_desktop_high") || 0;
         highScoreElem.innerText = highScore;
-
         let isPlaying = true;
         let blockLeft = 400;
         let gameSpeed = 6;
@@ -581,35 +618,18 @@
         function jump() {
             if (!hero.classList.contains("jump") && isPlaying) {
                 hero.classList.add("jump");
-                setTimeout(() => {
-                    hero.classList.remove("jump");
-                }, 400);
+                setTimeout(() => hero.classList.remove("jump"), 400);
             }
         }
-
-        gameContainer.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            jump();
-        }, {passive: false});
-
-        gameContainer.addEventListener("click", () => {
-            jump();
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (e.code === "Space") {
-                jump();
-                e.preventDefault();
-            }
-        });
+        gameContainer.addEventListener("touchstart", (e) => { e.preventDefault(); jump(); }, {passive: false});
+        gameContainer.addEventListener("click", () => jump());
+        document.addEventListener("keydown", (e) => { if (e.code === "Space") { jump(); e.preventDefault(); } });
 
         function startGameLoop() {
             gameInterval = setInterval(() => {
                 if (!isPlaying) return;
-
                 let containerWidth = gameContainer.offsetWidth;
                 blockLeft -= gameSpeed;
-                
                 if (blockLeft < -20) {
                     blockLeft = containerWidth;
                     score += 10;
@@ -617,19 +637,15 @@
                     if (score % 40 === 0) gameSpeed += 0.5;
                 }
                 block.style.left = blockLeft + "px";
-
                 let heroBottom = parseInt(window.getComputedStyle(hero).getPropertyValue("bottom"));
-
                 if (blockLeft > 30 && blockLeft < 60 && heroBottom < 28) {
                     isPlaying = false;
                     clearInterval(gameInterval);
-
                     if (score > highScore) {
                         highScore = score;
                         localStorage.setItem("mk_desktop_high", highScore);
                         highScoreElem.innerText = highScore;
                     }
-
                     gameOverScreen.style.display = "flex";
                 }
             }, 20);
@@ -646,299 +662,42 @@
             isPlaying = true;
             startGameLoop();
         }
-
-        restartBtn.addEventListener("touchend", (e) => {
-            e.preventDefault();
-            triggerRestart();
-        });
+        restartBtn.addEventListener("touchend", (e) => { e.preventDefault(); triggerRestart(); });
         restartBtn.addEventListener("click", triggerRestart);
-
         startGameLoop();
 
-
-        /* برمجة اللعبة الثانية (Memory Game) */
+        /* 2: Memory Match */
         const emojis = ['🚀', '💻', '🎮', '🔥', '🚀', '💻', '🎮', '🔥'];
         let memoryGrid = document.getElementById("memory-grid");
-        let firstCard = null;
-        let lockBoard = false;
-        let matchesFound = 0;
+        let firstCard = null, lockBoard = false, matchesFound = 0;
 
         function initMemoryGame() {
             memoryGrid.innerHTML = "";
-            matchesFound = 0;
-            firstCard = null;
-            lockBoard = false;
+            matchesFound = 0; firstCard = null; lockBoard = false;
             document.getElementById("mem-status").innerText = "طابق الرموز المتشابهة";
-            
             let shuffled = emojis.sort(() => 0.5 - Math.random());
-            
             shuffled.forEach(emoji => {
                 let card = document.createElement("div");
                 card.classList.add("memory-card");
                 card.dataset.emoji = emoji;
-                
                 card.addEventListener("click", flipCard);
-                card.addEventListener("touchend", (e) => {
-                    e.preventDefault();
-                    flipCard.call(card);
-                });
-                
+                card.addEventListener("touchend", (e) => { e.preventDefault(); flipCard.call(card); });
                 memoryGrid.appendChild(card);
             });
         }
-
         function flipCard() {
-            if (lockBoard) return;
-            if (this === firstCard) return;
-            if (this.classList.contains("flipped")) return;
-
+            if (lockBoard || this === firstCard || this.classList.contains("flipped")) return;
             this.classList.add("flipped");
             this.innerText = this.dataset.emoji;
-
-            if (!firstCard) {
-                firstCard = this;
-                return;
-            }
-
+            if (!firstCard) { firstCard = this; return; }
             let secondCard = this;
-            let isMatch = firstCard.dataset.emoji === secondCard.dataset.emoji;
-
-            if (isMatch) {
-                firstCard = null;
-                matchesFound += 2;
-                if (matchesFound === emojis.length) {
-                    document.getElementById("mem-status").innerText = "🎉 فزت في اللعبة!";
-                }
+            if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+                firstCard = null; matchesFound += 2;
+                if (matchesFound === emojis.length) document.getElementById("mem-status").innerText = "🎉 فزت في اللعبة!";
             } else {
                 lockBoard = true;
                 setTimeout(() => {
-                    firstCard.classList.remove("flipped");
-                    firstCard.innerText = "";
-                    secondCard.classList.remove("flipped");
-                    secondCard.innerText = "";
-                    firstCard = null;
-                    lockBoard = false;
-                }, 700);
-            }
-        }
-        initMemoryGame();
-
-
-        /* برمجة اللعبة الثالثة (Guess The Number) */
-        let targetNum = 0;
-        function initGuessGame() {
-            targetNum = Math.floor(Math.random() * 50) + 1;
-            document.getElementById("guess-status").innerText = "اختر رقماً من 1 إلى 50";
-            document.getElementById("guess-feedback").innerText = "";
-            document.getElementById("guess-input").value = "";
-        }
-
-        function checkGuess() {
-            let userVal = parseInt(document.getElementById("guess-input").value);
-            let feedback = document.getElementById("guess-feedback");
-            
-            if(isNaN(userVal)) {
-                feedback.innerText = "الرجاء إدخال رقم صحيح!";
-                return;
-            }
-
-            if(userVal === targetNum) {
-                feedback.innerText = "🎉 بطل! لقد اخترت الرقم الصحيح!";
-                document.getElementById("guess-status").innerText = "فزت في التحدي!";
-            } else if(userVal < targetNum) {
-                feedback.innerText = "⬆️ الرقم السحري أعلى من كده!";
-            } else {
-                feedback.innerText = "⬇️ الرقم السحري أقل من كده!";
-            }
-        }
-        initGuessGame();
-
-
-        /* برمجة اللعبة الرابعة (Rock Paper Scissors) */
-        let pScore = 0, aScore = 0;
-        const rpsIcons = { rock: '🪨', paper: '📄', scissors: '✂️' };
-
-        function playRPS(playerChoice) {
-            const choices = ['rock', 'paper', 'scissors'];
-            const aiChoice = choices[Math.floor(Math.random() * 3)];
-            let resultText = "";
-
-            if (playerChoice === aiChoice) {
-                resultText = "🤝 تعادل!";
-            } else if (
-                (playerChoice === 'rock' && aiChoice === 'scissors') ||
-                (playerChoice === 'paper' && aiChoice === 'rock') ||
-                (playerChoice === 'scissors' && aiChoice === 'paper')
-            ) {
-                resultText = "🎉 لقد فزت بهذه الجولة!";
-                pScore++;
-            } else {
-                resultText = "❌ فاز الذكاء الاصطناعي!";
-                aScore++;
-            }
-
-            document.getElementById("player-score").innerText = pScore;
-            document.getElementById("ai-score").innerText = aScore;
-            document.getElementById("rps-result-text").innerText = resultText;
-            document.getElementById("rps-details").innerText = `أنت اخترت ${rpsIcons[playerChoice]} | الكمبيوتر اختار ${rpsIcons[aiChoice]}`;
-        }
-
-
-        /* برمجة اللعبة الخامسة (Tic Tac Toe) */
-        let tttBoard = ['', '', '', '', '', '', '', '', ''];
-        let tttGameActive = true;
-        let tttPlayer = 'X';
-
-        function makeMove(index) {
-            if (tttBoard[index] === '' && tttGameActive) {
-                tttBoard[index] = tttPlayer;
-                document.getElementsByClassName('ttt-cell')[index].innerText = tttPlayer;
-                
-                checkWinnerTTT();
-                
-                if (tttGameActive) {
-                    tttPlayer = 'O';
-                    document.getElementById('ttt-status').innerText = "دور الكمبيوتر (O)";
-                    setTimeout(aiMoveTTT, 400);
-                }
-            }
-        }
-
-        function aiMoveTTT() {
-            if (!tttGameActive) return;
-            let emptyCells = [];
-            tttBoard.forEach((val, idx) => { if(val === '') emptyCells.push(idx); });
-            
-            if (emptyCells.length > 0) {
-                let randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-                tttBoard[randomIndex] = 'O';
-                document.getElementsByClassName('ttt-cell')[randomIndex].innerText = 'O';
-                checkWinnerTTT();
-                if (tttGameActive) {
-                    tttPlayer = 'X';
-                    document.getElementById('ttt-status').innerText = "دورك (X)";
-                }
-            }
-        }
-
-        function checkWinnerTTT() {
-            const winConditions = [
-                [0,1,2], [3,4,5], [6,7,8],
-                [0,3,6], [1,4,7], [2,5,8],
-                [0,4,8], [2,4,6]
-            ];
-            let roundWon = false;
-            
-            for (let condition of winConditions) {
-                let a = tttBoard[condition[0]], b = tttBoard[condition[1]], c = tttBoard[condition[2]];
-                if (a === '' || b === '' || c === '') continue;
-                if (a === b && b === c) { roundWon = true; break; }
-            }
-
-            if (roundWon) {
-                document.getElementById('ttt-status').innerText = `🎉 الفائز هو ${tttPlayer}!`;
-                tttGameActive = false;
-                return;
-            }
-
-            if (!tttBoard.includes('')) {
-                document.getElementById('ttt-status').innerText = "🤝 تعادل!";
-                tttGameActive = false;
-            }
-        }
-
-        function resetTTT() {
-            tttBoard = ['', '', '', '', '', '', '', '', ''];
-            tttGameActive = true;
-            tttPlayer = 'X';
-            document.getElementById('ttt-status').innerText = "دورك (X)";
-            Array.from(document.getElementsByClassName('ttt-cell')).forEach(cell => cell.innerText = '');
-        }
-
-
-        /* برمجة اللعبة السادسة (Dice Roll Challenge) */
-        let dicePScore = 0, diceCScore = 0;
-        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-
-        function rollDice() {
-            let pRoll = Math.floor(Math.random() * 6) + 1;
-            let cRoll = Math.floor(Math.random() * 6) + 1;
-            
-            document.getElementById('dice-display').innerText = `${diceFaces[pRoll-1]} vs ${diceFaces[cRoll-1]}`;
-            
-            if (pRoll > cRoll) {
-                dicePScore++;
-                document.getElementById('dice-msg').innerText = `🎉 فزت في الرمية (${pRoll} مقابل ${cRoll})`;
-            } else if (pRoll < cRoll) {
-                diceCScore++;
-                document.getElementById('dice-msg').innerText = `❌ فاز الكمبيوتر (${cRoll} مقابل ${pRoll})`;
-            } else {
-                document.getElementById('dice-msg').innerText = `🤝 تعادل في الرمية (${pRoll})`;
-            }
-            
-            document.getElementById('dice-p').innerText = dicePScore;
-            document.getElementById('dice-c').innerText = diceCScore;
-        }
-
-
-        /* برمجة اللعبة السابعة (Space Dodge) الجديدة */
-        const spaceContainer = document.getElementById("space-container");
-        const spaceship = document.getElementById("spaceship");
-        let dodgeScore = 0;
-        let dodgeInterval;
-        let isDodging = true;
-
-        spaceContainer.addEventListener("mousemove", (e) => {
-            let rect = spaceContainer.getBoundingClientRect();
-            let x = e.clientX - rect.left;
-            if (x >= 15 && x <= rect.width - 15) {
-                spaceship.style.left = x + "px";
-            }
-        });
-
-        spaceContainer.addEventListener("touchmove", (e) => {
-            let rect = spaceContainer.getBoundingClientRect();
-            let x = e.touches[0].clientX - rect.left;
-            if (x >= 15 && x <= rect.width - 15) {
-                spaceship.style.left = x + "px";
-            }
-            e.preventDefault();
-        }, {passive: false});
-
-
-        /* برمجة اللعبة الثامنة (Fast Clicker) الجديدة */
-        let clickerScore = 0;
-        let clickerTimeLeft = 10;
-        let clickerTimer = null;
-        let isClickerActive = false;
-
-        function startClickerGame() {
-            clickerScore = 0;
-            clickerTimeLeft = 10;
-            isClickerActive = true;
-            document.getElementById("clicker-score").innerText = clickerScore;
-            document.getElementById("clicker-time").innerText = clickerTimeLeft;
-            document.getElementById("clicker-msg").innerText = "انقر بأسرع ما يمكنك!";
-
-            if (clickerTimer) clearInterval(clickerTimer);
-
-            clickerTimer = setInterval(() => {
-                clickerTimeLeft--;
-                document.getElementById("clicker-time").innerText = clickerTimeLeft;
-                if (clickerTimeLeft <= 0) {
-                    clearInterval(clickerTimer);
-                    isClickerActive = false;
-                    document.getElementById("clicker-msg").innerText = `🏁 انتهى الوقت! حصيلتك: ${clickerScore} نقرة`;
-                }
-            }, 1000);
-        }
-
-        function hitClicker() {
-            if (isClickerActive) {
-                clickerScore++;
-                document.getElementById("clicker-score").innerText = clickerScore;
-            }
-        }
-    </script>
-</body>
-</html> 
+                    firstCard.classList.remove("flipped"); firstCard.innerText = "";
+                    secondCard.classList.remove("flipped"); secondCard.innerText = "";
+                    firstCard = null; lockBoard = false;
+                }, 700); 
